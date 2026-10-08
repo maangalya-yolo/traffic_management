@@ -1,0 +1,466 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------< com.traffic.management:traffic-management >--------------
+[INFO] Building traffic-management 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ traffic-management ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ traffic-management ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 47 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ traffic-management ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ traffic-management ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ traffic-management ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.traffic.management.domain.TrafficDomainRepositoryTest
+09:21:50.985 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.traffic.management.domain.TrafficDomainRepositoryTest]: TrafficDomainRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:21:51.164 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.traffic.management.TrafficManagementApplication for test class com.traffic.management.domain.TrafficDomainRepositoryTest
+09:21:51.316 [main] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+09:21:51.549 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-08T09:21:51.969+05:30  INFO 30900 --- [traffic-management] [           main] c.t.m.d.TrafficDomainRepositoryTest      : Starting TrafficDomainRepositoryTest using Java 23.0.1 with PID 30900 (started by maang in C:\Users\maang\OneDrive\Desktop\traffic_management\traffic_management\backend)
+2026-10-08T09:21:51.970+05:30  INFO 30900 --- [traffic-management] [           main] c.t.m.d.TrafficDomainRepositoryTest      : The following 1 profile is active: "test"
+2026-10-08T09:21:52.504+05:30  INFO 30900 --- [traffic-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-08T09:21:52.606+05:30  INFO 30900 --- [traffic-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 92 ms. Found 9 JPA repository interfaces.
+2026-10-08T09:21:52.701+05:30  INFO 30900 --- [traffic-management] [           main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2026-10-08T09:21:52.983+05:30  INFO 30900 --- [traffic-management] [           main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:8eb70b90-aef9-40ff-8556-e0163ad498d2;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2026-10-08T09:21:53.363+05:30  INFO 30900 --- [traffic-management] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-08T09:21:53.444+05:30  INFO 30900 --- [traffic-management] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-10-08T09:21:53.492+05:30  INFO 30900 --- [traffic-management] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-08T09:21:54.026+05:30  INFO 30900 --- [traffic-management] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-08T09:21:54.147+05:30  WARN 30900 --- [traffic-management] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-08T09:21:56.062+05:30  INFO 30900 --- [traffic-management] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    drop table if exists audit_logs cascade 
+Hibernate: 
+    drop table if exists emergency_requests cascade 
+Hibernate: 
+    drop table if exists incidents cascade 
+Hibernate: 
+    drop table if exists intersections cascade 
+Hibernate: 
+    drop table if exists roles cascade 
+Hibernate: 
+    drop table if exists sensors cascade 
+Hibernate: 
+    drop table if exists traffic_readings cascade 
+Hibernate: 
+    drop table if exists traffic_signals cascade 
+Hibernate: 
+    drop table if exists users cascade 
+Hibernate: 
+    create table audit_logs (
+        audit_id bigint generated by default as identity,
+        timestamp timestamp(6) with time zone not null,
+        user_id bigint not null,
+        result varchar(80) not null,
+        action varchar(200) not null,
+        resource varchar(200) not null,
+        source varchar(200) not null,
+        primary key (audit_id)
+    )
+Hibernate: 
+    create table emergency_requests (
+        processed_at timestamp(6) with time zone,
+        request_id bigint generated by default as identity,
+        requested_at timestamp(6) with time zone not null,
+        vehicle_id varchar(50) not null,
+        location varchar(200) not null,
+        priority enum ('CRITICAL','HIGH','LOW','MEDIUM') not null,
+        status enum ('APPROVED','CANCELLED','DISPATCHED','PENDING','REJECTED') not null,
+        primary key (request_id)
+    )
+Hibernate: 
+    create table incidents (
+        created_at timestamp(6) with time zone not null,
+        created_by bigint not null,
+        incident_id bigint generated by default as identity,
+        updated_at timestamp(6) with time zone not null,
+        location varchar(200) not null,
+        description TEXT not null,
+        incident_type enum ('ACCIDENT','CONGESTION','OTHER','ROADWORK','WEATHER') not null,
+        severity enum ('CRITICAL','HIGH','LOW','MEDIUM') not null,
+        status enum ('CLOSED','IN_PROGRESS','OPEN','RESOLVED') not null,
+        primary key (incident_id)
+    )
+Hibernate: 
+    create table intersections (
+        intersection_id bigint generated by default as identity,
+        intersection_name varchar(120) not null,
+        location varchar(200) not null,
+        status enum ('CLOSED','DEGRADED','MAINTENANCE','OPERATING') not null,
+        primary key (intersection_id)
+    )
+Hibernate: 
+    create table roles (
+        role_id bigint generated by default as identity,
+        role_name enum ('ADMIN','EMERGENCY_SERVICE','OPERATOR','SYSTEM_ADMINISTRATOR','TRAFFIC_OPERATOR','TRAFFIC_SENSOR','TRAFFIC_SUPERVISOR','VIEWER') not null unique,
+        primary key (role_id)
+    )
+Hibernate: 
+    create table sensors (
+        registered_at timestamp(6) with time zone not null,
+        sensor_id bigint generated by default as identity,
+        credential_id varchar(100) not null,
+        sensor_name varchar(120) not null,
+        location varchar(200) not null,
+        sensor_type enum ('CAMERA','IOT_DEVICE','LOOP','RADAR') not null,
+        status enum ('ACTIVE','INACTIVE','MAINTENANCE','OFFLINE') not null,
+        primary key (sensor_id)
+    )
+Hibernate: 
+    create table traffic_readings (
+        average_speed float(53) not null,
+        vehicle_count integer not null check (vehicle_count>=0),
+        reading_id bigint generated by default as identity,
+        sensor_id bigint not null,
+        timestamp timestamp(6) with time zone not null,
+        integrity_status enum ('INVALID','SUSPECT','VALID') not null,
+        primary key (reading_id)
+    )
+Hibernate: 
+    create table traffic_signals (
+        intersection_id bigint not null,
+        signal_id bigint generated by default as identity,
+        updated_at timestamp(6) with time zone not null,
+        updated_by bigint not null,
+        configuration TEXT not null,
+        signal_state enum ('FLASHING','GREEN','RED','YELLOW') not null,
+        primary key (signal_id)
+    )
+Hibernate: 
+    create table users (
+        created_at timestamp(6) with time zone not null,
+        role_id bigint not null,
+        user_id bigint generated by default as identity,
+        username varchar(80) not null unique,
+        name varchar(120) not null,
+        password_hash varchar(255) not null,
+        status enum ('ACTIVE','INACTIVE','LOCKED') not null,
+        primary key (user_id)
+    )
+Hibernate: 
+    alter table if exists audit_logs 
+       add constraint fk_audit_user 
+       foreign key (user_id) 
+       references users
+Hibernate: 
+    alter table if exists incidents 
+       add constraint fk_incident_created_by 
+       foreign key (created_by) 
+       references users
+Hibernate: 
+    alter table if exists traffic_readings 
+       add constraint fk_reading_sensor 
+       foreign key (sensor_id) 
+       references sensors
+Hibernate: 
+    alter table if exists traffic_signals 
+       add constraint fk_signal_intersection 
+       foreign key (intersection_id) 
+       references intersections
+Hibernate: 
+    alter table if exists traffic_signals 
+       add constraint fk_signal_updated_by 
+       foreign key (updated_by) 
+       references users
+Hibernate: 
+    alter table if exists users 
+       add constraint fk_user_role 
+       foreign key (role_id) 
+       references roles
+2026-10-08T09:21:56.239+05:30  INFO 30900 --- [traffic-management] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-08T09:21:57.366+05:30  INFO 30900 --- [traffic-management] [           main] c.t.m.d.TrafficDomainRepositoryTest      : Started TrafficDomainRepositoryTest in 5.828 seconds (process running for 7.246)
+WARNING: A Java agent has been loaded dynamically (C:\Users\maang\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.19\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+Hibernate: 
+    insert 
+    into
+        intersections
+        (intersection_name, location, status, intersection_id) 
+    values
+        (?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        roles
+        (role_name, role_id) 
+    values
+        (?, default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at, name, password_hash, role_id, status, username, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        traffic_signals
+        (configuration, intersection_id, signal_state, updated_at, updated_by, signal_id) 
+    values
+        (?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (action, resource, result, source, timestamp, user_id, audit_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        count(*) 
+    from
+        audit_logs al1_0
+Hibernate: 
+    insert 
+    into
+        roles
+        (role_name, role_id) 
+    values
+        (?, default)
+Hibernate: 
+    insert 
+    into
+        roles
+        (role_name, role_id) 
+    values
+        (?, default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at, name, password_hash, role_id, status, username, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        sensors
+        (credential_id, location, registered_at, sensor_name, sensor_type, status, sensor_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        traffic_readings
+        (average_speed, integrity_status, sensor_id, timestamp, vehicle_count, reading_id) 
+    values
+        (?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        roles
+        (role_name, role_id) 
+    values
+        (?, default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at, name, password_hash, role_id, status, username, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        incidents
+        (created_at, created_by, description, incident_type, location, severity, status, updated_at, incident_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        emergency_requests
+        (location, priority, processed_at, requested_at, status, vehicle_id, request_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.126 s -- in com.traffic.management.domain.TrafficDomainRepositoryTest
+[INFO] Running com.traffic.management.HealthControllerIntegrationTest
+2026-10-08T09:21:59.933+05:30  INFO 30900 --- [traffic-management] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.traffic.management.HealthControllerIntegrationTest]: HealthControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-08T09:21:59.966+05:30  INFO 30900 --- [traffic-management] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.traffic.management.TrafficManagementApplication for test class com.traffic.management.HealthControllerIntegrationTest
+2026-10-08T09:21:59.991+05:30  INFO 30900 --- [traffic-management] [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-08T09:22:00.060+05:30  INFO 30900 --- [traffic-management] [           main] c.t.m.HealthControllerIntegrationTest    : Starting HealthControllerIntegrationTest using Java 23.0.1 with PID 30900 (started by maang in C:\Users\maang\OneDrive\Desktop\traffic_management\traffic_management\backend)
+2026-10-08T09:22:00.061+05:30  INFO 30900 --- [traffic-management] [           main] c.t.m.HealthControllerIntegrationTest    : The following 1 profile is active: "test"
+2026-10-08T09:22:01.545+05:30  INFO 30900 --- [traffic-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-08T09:22:01.607+05:30  INFO 30900 --- [traffic-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 62 ms. Found 9 JPA repository interfaces.
+2026-10-08T09:22:02.705+05:30  INFO 30900 --- [traffic-management] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-08T09:22:02.711+05:30  INFO 30900 --- [traffic-management] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-08T09:22:02.730+05:30  INFO 30900 --- [traffic-management] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-08T09:22:02.732+05:30  INFO 30900 --- [traffic-management] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-08T09:22:02.768+05:30  INFO 30900 --- [traffic-management] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn9: url=jdbc:h2:mem:traffic_management_test user=SA
+2026-10-08T09:22:02.772+05:30  INFO 30900 --- [traffic-management] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-08T09:22:02.778+05:30  WARN 30900 --- [traffic-management] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-08T09:22:03.219+05:30  INFO 30900 --- [traffic-management] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-08T09:22:03.256+05:30  INFO 30900 --- [traffic-management] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-08T09:22:03.751+05:30  INFO 30900 --- [traffic-management] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name trafficUserDetailsService
+2026-10-08T09:22:03.931+05:30  WARN 30900 --- [traffic-management] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-08T09:22:05.149+05:30  INFO 30900 --- [traffic-management] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-10-08T09:22:06.477+05:30  INFO 30900 --- [traffic-management] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:traffic_management_test'
+2026-10-08T09:22:06.883+05:30  INFO 30900 --- [traffic-management] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-08T09:22:06.887+05:30  INFO 30900 --- [traffic-management] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-08T09:22:06.891+05:30  INFO 30900 --- [traffic-management] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-08T09:22:07.377+05:30  INFO 30900 --- [traffic-management] [           main] c.t.m.HealthControllerIntegrationTest    : Started HealthControllerIntegrationTest in 7.385 seconds (process running for 17.256)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.755 s -- in com.traffic.management.HealthControllerIntegrationTest
+[INFO] Running com.traffic.management.security.SecurityAuthenticationIntegrationTest
+2026-10-08T09:22:08.720+05:30  INFO 30900 --- [traffic-management] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.traffic.management.security.SecurityAuthenticationIntegrationTest]: SecurityAuthenticationIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-08T09:22:08.771+05:30  INFO 30900 --- [traffic-management] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.traffic.management.TrafficManagementApplication for test class com.traffic.management.security.SecurityAuthenticationIntegrationTest
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/admin/users
+       Parameters = {}
+          Headers = [Authorization:"Basic dmlld2VyOlZpZXdlckAxMjM="]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = Unauthorized
+          Headers = [WWW-Authenticate:"Basic realm="Realm"", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2026-10-08T09:22:09.679+05:30  INFO 30900 --- [traffic-management] [           main] c.t.management.service.AuditLogService   : Security event recorded: user=admin action=LOGIN_SUCCESS resource=AUTHENTICATION result=SUCCESS source=AUTH_CONTROLLER
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/operator/signals
+       Parameters = {}
+          Headers = [Authorization:"Basic b3BlcmF0b3I6T3BlcmF0b3JAMTIz"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = Unauthorized
+          Headers = [WWW-Authenticate:"Basic realm="Realm"", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 6, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 1.166 s <<< FAILURE! -- in com.traffic.management.security.SecurityAuthenticationIntegrationTest
+[ERROR] com.traffic.management.security.SecurityAuthenticationIntegrationTest.viewerShouldNotAccessAdminEndpoint -- Time elapsed: 0.175 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<403> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.traffic.management.security.SecurityAuthenticationIntegrationTest.viewerShouldNotAccessAdminEndpoint(SecurityAuthenticationIntegrationTest.java:102)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+[ERROR] com.traffic.management.security.SecurityAuthenticationIntegrationTest.operatorShouldAccessOperatorEndpoint -- Time elapsed: 0.045 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.traffic.management.security.SecurityAuthenticationIntegrationTest.operatorShouldAccessOperatorEndpoint(SecurityAuthenticationIntegrationTest.java:109)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   SecurityAuthenticationIntegrationTest.operatorShouldAccessOperatorEndpoint:109 Status expected:<200> but was:<401>
+[ERROR]   SecurityAuthenticationIntegrationTest.viewerShouldNotAccessAdminEndpoint:102 Status expected:<403> but was:<401>
+[INFO] 
+[ERROR] Tests run: 12, Failures: 2, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  24.879 s
+[INFO] Finished at: 2026-10-08T09:22:10+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.2.5:test (default-test) on project traffic-management: There are test failures.
+[ERROR] 
+[ERROR] Please refer to C:\Users\maang\OneDrive\Desktop\traffic_management\traffic_management\backend\target\surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

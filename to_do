@@ -1,0 +1,962 @@
+You are the senior software engineer responsible for implementing my academic project:
+
+PROJECT:
+Smart City Traffic Management System
+
+GITHUB REPOSITORY:
+https://github.com/maangalya-yolo/traffic_management.git
+
+IMPORTANT:
+This is an assessed Secure Software Engineering project. Do not treat this as a simple CRUD application. The implementation must demonstrate proper software engineering, secure development, Git/GitHub practices, testing, Docker, Kubernetes, CI/CD, security testing, logging, monitoring, hardening, and deployment practices.
+
+==================================================
+1. PROJECT REQUIREMENTS
+==================================================
+
+Build a secure Smart City Traffic Management System.
+
+The system receives traffic information from sensors/cameras, manages traffic signals, detects congestion, and allows authorized traffic operators to modify signal configurations.
+
+Required functionality:
+
+1. Traffic sensor registration
+2. Real-time traffic data submission
+3. Traffic data validation
+4. Traffic congestion monitoring/detection
+5. Traffic signal monitoring
+6. Traffic signal configuration
+7. Authorization/approval for sensitive signal changes
+8. Emergency vehicle priority
+9. Traffic incident management
+10. Alerts
+11. Historical traffic analysis
+12. Operator dashboard
+13. User management
+14. Role-Based Access Control
+15. Audit logging
+16. Security event monitoring
+
+Security threats that must be addressed:
+
+- Sensor spoofing
+- False traffic data
+- Unauthorized signal modification
+- Privilege escalation
+- API abuse / availability attacks
+- Data integrity attacks
+- Emergency priority abuse
+- Credential compromise
+- Audit-log tampering
+- Sensitive information disclosure
+
+==================================================
+2. REQUIRED TECHNOLOGY STACK
+==================================================
+
+Use this stack unless there is a strong technical reason otherwise:
+
+Frontend:
+- React
+- JavaScript or TypeScript
+- Clean component-based structure
+
+Backend:
+- Java
+- Spring Boot
+- REST APIs
+- Spring Security
+- Bean Validation where appropriate
+
+Database:
+- PostgreSQL
+
+Testing:
+- JUnit
+- Spring Boot Test
+- integration testing
+- validation/system testing
+- simple API/input fuzzing
+
+Static/security analysis:
+- Semgrep
+- optionally SonarQube/SonarLint if practical
+
+Containerization:
+- Docker
+- Docker Compose where useful for local development
+
+Orchestration:
+- Kubernetes
+- Minikube for local deployment
+
+CI/CD:
+- GitHub Actions
+
+Version control:
+- Git
+- GitHub
+
+==================================================
+3. ARCHITECTURE
+==================================================
+
+Use a LAYERED MODULAR MONOLITH architecture.
+
+Do NOT create microservices unless explicitly requested later.
+
+Architecture:
+
+React Frontend
+      |
+REST API
+      |
+Spring Boot
+      |
+--------------------------------
+Authentication
+Authorization / RBAC
+Validation
+Business Services
+Audit / Security
+--------------------------------
+      |
+Repositories
+      |
+PostgreSQL
+
+The backend should have clear separation between:
+
+- controllers
+- DTOs
+- services
+- repositories
+- entities/models
+- security
+- validation
+- exception handling
+- audit/logging
+
+Do not put all business logic into controllers.
+
+==================================================
+4. ACTORS AND ROLES
+==================================================
+
+Use these roles:
+
+1. TRAFFIC_OPERATOR
+   - Login
+   - View dashboard
+   - Monitor traffic
+   - View alerts
+   - Manage incidents
+   - View historical traffic
+
+2. TRAFFIC_SUPERVISOR
+   - All operator capabilities
+   - Configure traffic signals
+   - Approve sensitive signal changes
+   - Manage emergency priority
+
+3. SYSTEM_ADMINISTRATOR
+   - Manage users
+   - Assign roles
+   - Register/manage sensors
+   - View audit logs
+   - System administration
+
+4. EMERGENCY_SERVICE
+   - Submit emergency vehicle priority requests
+
+5. TRAFFIC_SENSOR
+   - Submit traffic readings
+   - Report sensor status
+
+Never trust the frontend for authorization.
+All authorization must be enforced server-side.
+
+==================================================
+5. CORE DATA MODEL
+==================================================
+
+Use these conceptual entities:
+
+ROLE
+- role_id
+- role_name
+
+USER
+- user_id
+- name
+- username
+- password_hash
+- role_id
+- status
+- created_at
+
+SENSOR
+- sensor_id
+- sensor_name
+- location
+- sensor_type
+- credential_id
+- status
+- registered_at
+
+TRAFFIC_READING
+- reading_id
+- sensor_id
+- timestamp
+- vehicle_count
+- average_speed
+- integrity_status
+
+INTERSECTION
+- intersection_id
+- intersection_name
+- location
+- status
+
+TRAFFIC_SIGNAL
+- signal_id
+- intersection_id
+- signal_state
+- configuration
+- updated_at
+- updated_by
+
+INCIDENT
+- incident_id
+- location
+- incident_type
+- severity
+- description
+- status
+- created_at
+- updated_at
+- created_by
+
+EMERGENCY_REQUEST
+- request_id
+- vehicle_id
+- location
+- priority
+- status
+- requested_at
+- processed_at
+
+AUDIT_LOG
+- audit_id
+- user_id
+- action
+- resource
+- timestamp
+- result
+- source
+
+Use appropriate relationships and constraints.
+
+==================================================
+6. SECURITY REQUIREMENTS
+==================================================
+
+Implement security as part of the architecture.
+
+Required controls include:
+
+Authentication:
+- secure password hashing
+- no plaintext passwords
+- secure authentication
+- appropriate session/token handling
+- login failure handling
+
+Authorization:
+- server-side RBAC
+- method/endpoint-level authorization
+- least privilege
+- supervisor-only signal modification
+- administrator-only user/sensor administration
+
+Input validation:
+- validate request DTOs
+- validate ranges
+- reject malformed requests
+- validate signal configuration
+- validate emergency requests
+- validate sensor readings
+
+Secure errors:
+- never expose stack traces
+- never expose passwords/secrets
+- never expose unnecessary database details
+- use centralized exception handling
+
+Audit:
+Log security-sensitive actions such as:
+- login success/failure
+- role changes
+- signal configuration changes
+- emergency priority requests
+- sensor registration
+- unauthorized requests
+- important incident changes
+
+Availability:
+- request validation
+- request-size controls
+- rate limiting where practical
+- protection against excessive requests
+
+Secrets:
+- NEVER hard-code passwords
+- NEVER hard-code API keys
+- NEVER commit database passwords
+- NEVER commit tokens
+- use environment variables / configuration / Kubernetes Secrets where appropriate
+
+Database:
+- use least-privilege application credentials
+- use parameterized queries/JPA
+- do not create SQL injection vulnerabilities intentionally
+
+==================================================
+7. PHASE 6 – UI DESIGN
+==================================================
+
+The assessment requires at least four screens.
+
+Although the generic assessment wording refers to Student/Faculty/Results, adapt it to the Smart City Traffic Management domain.
+
+Use:
+
+1. Login Screen
+2. Traffic Operator Dashboard
+3. Traffic Supervisor / Signal Management Screen
+4. Historical Traffic Analysis / Results Screen
+
+The UI should include:
+
+- user identification
+- clear navigation
+- useful feedback
+- validation messages
+- error handling
+- visibility of important information
+- consistent components
+- user control
+- safe confirmation for sensitive operations
+
+For dangerous operations such as signal configuration:
+- show clear confirmation
+- do not rely only on frontend restrictions
+- backend must enforce authorization
+
+==================================================
+8. GIT AND BRANCHING STRATEGY
+==================================================
+
+THIS IS VERY IMPORTANT.
+
+Do NOT implement the entire project on one branch.
+
+Use a proper branching strategy.
+
+Main branches:
+
+main
+develop
+
+Feature branches should be created for separate areas of work, for example:
+
+feature/project-foundation
+feature/ui-design
+feature/auth-rbac
+feature/sensor-management
+feature/traffic-monitoring
+feature/signal-management
+feature/emergency-priority
+feature/incident-management
+feature/audit-logging
+feature/historical-analysis
+feature/refactoring
+feature/docker
+feature/kubernetes
+feature/cicd-security
+feature/logging-hardening
+
+Do NOT create all branches unnecessarily at once.
+
+Create/use branches according to the actual development stage.
+
+Expected flow:
+
+feature branch
+      |
+      v
+develop
+      |
+      v
+main
+
+Do not commit directly to main during normal development.
+
+Use meaningful commit messages.
+
+Examples:
+
+feat: add user authentication
+feat: implement sensor registration
+feat: add signal authorization
+test: add authentication tests
+fix: reject invalid traffic readings
+refactor: extract signal authorization service
+security: harden authentication handling
+build: add Docker configuration
+ci: add security checks
+docs: update deployment documentation
+
+==================================================
+9. THREE SOFTWARE VERSIONS
+==================================================
+
+The project MUST have three identifiable major versions because the assessment requires code-smell/refactoring evidence.
+
+VERSION 1.0:
+Initial implementation.
+
+V1 should be functional but may contain realistic CODE QUALITY issues.
+
+Examples:
+- long methods
+- duplicated validation
+- duplicated authorization logic
+- excessive controller responsibility
+- magic values
+- poor separation of responsibilities
+- weak exception structure
+- unnecessary duplication
+
+IMPORTANT:
+Do NOT intentionally introduce dangerous security vulnerabilities.
+
+Do NOT intentionally create:
+- SQL injection
+- plaintext password storage
+- authentication bypass
+- intentional remote code execution
+- intentional credential leakage
+
+The V1 code smells should be maintainability/design problems.
+
+Tag:
+v1.0
+
+VERSION 2.0:
+Refactored implementation.
+
+Remove the identified code smells.
+
+Improve:
+- separation of concerns
+- readability
+- maintainability
+- duplication
+- exception handling
+- service boundaries
+- reusable validation/authorization logic
+
+Tag:
+v2.0
+
+VERSION 3.0:
+Final secure implementation.
+
+Add/harden:
+- authentication
+- RBAC
+- input validation
+- secure errors
+- audit logging
+- rate limiting where appropriate
+- secure configuration
+- dependency/security checks
+- tests
+- Docker security
+- Kubernetes security
+- CI/CD security
+- logging/monitoring
+- deployment hardening
+
+Tag:
+v3.0
+
+The Git history must make this progression visible.
+
+==================================================
+10. CODE COMMENTS
+==================================================
+
+Use proper professional comments.
+
+Comments should explain:
+- WHY a security control exists
+- WHY an unusual design decision exists
+- important validation/security assumptions
+- non-obvious business logic
+
+Do not add meaningless comments to every line.
+
+Bad:
+i++; // increment i
+
+Good:
+ // Signal configuration changes require supervisor authorization
+ // because they directly affect traffic control behavior.
+
+==================================================
+11. PHASE 11 – SECURE DEVELOPMENT AND BUILD
+==================================================
+
+The project must eventually demonstrate:
+
+- secure Git repository
+- branch strategy
+- protected main/develop where possible
+- code review / pull request workflow
+- least privilege
+- secret management
+- dependency management
+- static/security analysis
+- reproducible builds where practical
+- artifact integrity where practical
+
+Do not hard-code secrets.
+
+Create appropriate:
+- .gitignore
+- environment example files
+- documentation
+- security configuration
+
+Never commit real secrets.
+
+==================================================
+12. PHASE 12 – SECURE CODING AND REFACTORING
+==================================================
+
+We need clear V1 -> V2 -> V3 evidence.
+
+Choose authentication/authorization or another small security-sensitive module for the main before/after comparison.
+
+V1:
+- functional
+- code smells identified
+
+V2:
+- code smells refactored
+
+V3:
+- security hardened
+
+The implementation must demonstrate:
+- input validation
+- authorization
+- error handling
+- secure sensitive-data handling
+
+Keep before/after behavior traceable through Git history.
+
+==================================================
+13. PHASE 13 – DOCKER
+==================================================
+
+Create a proper Dockerfile.
+
+Apply container-security practices:
+
+1. Minimal suitable base image
+2. Pinned/versioned base image where practical
+3. Non-root execution
+4. Only required ports exposed
+5. No unnecessary packages
+6. No secrets inside image
+7. Proper .dockerignore
+8. Healthcheck where appropriate
+
+The final container must be buildable and runnable.
+
+==================================================
+14. PHASE 13 – KUBERNETES
+==================================================
+
+Create Kubernetes manifests for Minikube.
+
+At minimum:
+
+- Namespace
+- Deployment
+- Service
+- ConfigMap where appropriate
+- Secret where appropriate
+
+Apply at least two security controls:
+
+- non-root security context
+- resource requests/limits
+- restricted exposure
+- namespace isolation
+- Secret management
+- least privilege
+
+Do not expose services publicly unless required.
+
+==================================================
+15. PHASE 14 – CI/CD
+==================================================
+
+Create GitHub Actions workflow.
+
+Pipeline should include:
+
+1. Checkout
+2. Dependency installation
+3. Build
+4. Unit tests
+5. Integration tests
+6. Static/security analysis
+7. Package/build artifact
+8. Docker build where appropriate
+9. Deployment/package stage
+
+Use separate jobs/stages where practical.
+
+The pipeline must fail when critical required checks fail.
+
+Do not put secrets directly into workflow files.
+
+==================================================
+16. TESTING REQUIREMENTS
+==================================================
+
+At least two meaningful unit tests.
+
+At least one integration test.
+
+At least one validation/system end-to-end test.
+
+Include security tests for:
+- unauthorized signal modification
+- invalid input
+- authentication
+- RBAC
+
+Example:
+
+Traffic Operator attempts supervisor-only signal modification.
+
+Expected:
+HTTP 403 Forbidden.
+
+Also test:
+- valid supervisor request succeeds
+- malformed traffic reading rejected
+- invalid emergency request rejected
+
+==================================================
+17. FUZZING
+==================================================
+
+Implement a simple controlled fuzzing/input robustness test.
+
+Test an input boundary such as:
+- traffic reading API
+- sensor payload
+- incident description
+- signal configuration
+
+Use malformed/randomized values.
+
+Record:
+- input
+- response
+- observation
+- whether a defect was found
+
+Do not perform destructive fuzzing.
+
+==================================================
+18. DEFECT TRACKING
+==================================================
+
+The project must eventually demonstrate at least one defect.
+
+Use a realistic example such as:
+
+BUG:
+Operator was able to reach a supervisor-only endpoint.
+
+Severity:
+High
+
+Fix:
+Add server-side authorization.
+
+Retest:
+Operator receives 403.
+
+Track the defect through Git/Jira where practical.
+
+==================================================
+19. PHASE 15 – LOGGING
+==================================================
+
+Implement useful application/security logging.
+
+At minimum consider:
+
+- failed login count
+- successful authentication
+- unauthorized requests
+- signal configuration changes
+- emergency priority requests
+- sensor validation failures
+- incident changes
+- API error rate
+- request rate
+
+Do not log:
+- passwords
+- tokens
+- secrets
+- unnecessary sensitive personal information
+
+Use structured/logically searchable logs where practical.
+
+==================================================
+20. MONITORING
+==================================================
+
+Prepare metrics/alerts for at least five useful indicators:
+
+1. Failed login attempts
+2. Unauthorized API requests
+3. API error rate
+4. Excessive request rate
+5. Invalid sensor readings
+6. Signal configuration changes
+7. Emergency priority requests
+
+==================================================
+21. HARDENING
+==================================================
+
+Prepare deployment hardening for:
+
+- access control
+- unnecessary ports
+- unnecessary services
+- secrets
+- updates/dependencies
+- file permissions
+- database privileges
+- container privileges
+- Kubernetes permissions
+- least privilege
+
+==================================================
+22. SOFTWARE ENGINEERING PRACTICES
+==================================================
+
+Follow professional practices:
+
+- SOLID principles where appropriate
+- separation of concerns
+- DRY
+- meaningful naming
+- clean project structure
+- code review
+- automated tests
+- secure coding
+- dependency management
+- documentation
+- Git history
+- small focused commits
+- meaningful commit messages
+- reproducible builds
+- CI checks
+
+Do not over-engineer the project.
+
+Do not introduce microservices unnecessarily.
+
+Do not introduce cloud services or paid infrastructure.
+
+Everything should be runnable locally using:
+- VS Code
+- Java
+- Node.js
+- PostgreSQL
+- Docker
+- Minikube
+- GitHub Actions
+
+==================================================
+23. ASSESSMENT TRACEABILITY
+==================================================
+
+Maintain traceability:
+
+Requirement
+   ↓
+Use Case
+   ↓
+User Story
+   ↓
+Jira Task
+   ↓
+Git Branch
+   ↓
+Implementation
+   ↓
+Commit
+   ↓
+Unit/Integration Test
+   ↓
+Security Test
+   ↓
+Docker
+   ↓
+Kubernetes
+   ↓
+CI/CD
+   ↓
+Logging/Monitoring
+   ↓
+Final Security Review
+
+Important security scenario:
+
+"Unauthorized modification of a traffic signal"
+
+Trace this scenario through the implementation.
+
+Requirement:
+Only authorized supervisors may modify signal configuration.
+
+Use Case:
+Configure Traffic Signal.
+
+Threat:
+Elevation of Privilege.
+
+Vulnerability:
+Missing/incorrect server-side RBAC.
+
+Attack:
+Operator attempts supervisor-only signal modification.
+
+Control:
+Server-side RBAC.
+
+Expected result:
+HTTP 403.
+
+Audit:
+Unauthorized attempt recorded.
+
+==================================================
+24. IMPORTANT DEVELOPMENT RULE
+==================================================
+
+DO NOT IMPLEMENT EVERYTHING AT ONCE.
+
+Work incrementally.
+
+When I ask you to implement a phase/feature:
+- modify only the necessary files
+- preserve existing functionality
+- use the correct feature branch
+- explain what files are being changed
+- provide tests
+- provide a meaningful commit message
+- do not rewrite unrelated code
+
+Do not create fake implementation evidence.
+
+Do not claim something is implemented unless it actually exists in the code.
+
+Do not claim tests pass unless they have actually been run.
+
+Do not claim Docker/Kubernetes/CI works unless verified.
+
+==================================================
+25. COPILOT WORKING MODE
+==================================================
+
+I am a beginner and will execute your instructions through VS Code.
+
+Therefore:
+
+- Explain what you are doing before major changes.
+- Prefer small, verifiable steps.
+- Do not generate thousands of lines unnecessarily.
+- Do not silently overwrite existing files.
+- Do not delete existing work without explaining why.
+- Reuse existing code where appropriate.
+- Before major architectural changes, inspect the current project structure.
+- After implementation, tell me exactly which commands/tests should be run.
+- If a command fails, diagnose the actual error rather than guessing.
+- Keep implementation consistent with previous phases.
+
+==================================================
+26. CURRENT TASK
+==================================================
+
+The GitHub repository is:
+
+https://github.com/maangalya-yolo/traffic_management.git
+
+Start by inspecting the current repository/workspace.
+
+Do NOT immediately build the entire application.
+
+First determine:
+1. Current files
+2. Current branches
+3. Current project state
+4. Whether backend/frontend already exist
+5. Whether Git is initialized
+6. Whether the working tree is clean
+7. Available Java/Node/npm/Git versions if needed
+
+Then propose the INITIAL PROJECT FOUNDATION.
+
+The first implementation should establish:
+- repository structure
+- backend/frontend separation
+- basic documentation
+- .gitignore
+- environment-example strategy
+- initial build configuration
+- development branch strategy
+
+Do not implement all business features yet.
+
+Do not create fake screenshots/evidence.
+
+Do not create all feature branches immediately.
+
+After inspecting the repository, give me:
+A. Current state
+B. Recommended next branch
+C. Files you propose creating/changing
+D. Why each change is needed
+E. Exact implementation plan
+F. Tests/verification commands
+G. Suggested Git commit message
+
+Then wait for confirmation before making major implementation changes.
+
+Remember:
+THIS PROJECT MUST EVENTUALLY DEMONSTRATE V1.0 -> V2.0 -> V3.0 AND MULTIPLE FEATURE BRANCHES. DO NOT COLLAPSE THE ENTIRE DEVELOPMENT HISTORY INTO ONE BRANCH.
