@@ -60,6 +60,44 @@ main
 develop
   ^
   |
+
+
+## 🔐 Secure Build Practices
+
+Our project follows secure development and build practices.
+
+### Secure Build Checklist
+
+| Security Control | Status |
+|---|---|
+| Git version control | ✅ Implemented |
+| Main branch for stable code | ✅ Implemented |
+| No hard-coded passwords/secrets | ✅ Checked |
+| Maven dependency management | ✅ Implemented |
+| Automated GitHub Actions build | ✅ Implemented |
+| Automated unit testing | ✅ Implemented |
+| Fixed Java build environment | ✅ Implemented |
+| Build artifact generation | ✅ Implemented |
+| Least-privilege access | ✅ Applied |
+| Sensitive configuration protection | ✅ Applied |
+
+### CI/CD Build Process
+
+1. Checkout source code
+2. Set up Java environment
+3. Build the Spring Boot application
+4. Run automated tests
+5. Package the application
+6. Generate the build artifact
+
+### Security Practices
+
+- Passwords, API keys and sensitive credentials are not stored in source code.
+- Dependencies are managed using Maven.
+- Automated builds and tests are performed using GitHub Actions.
+- Security-sensitive configuration should be provided through environment variables or GitHub Secrets.
+- The main branch is maintained as the stable version of the project.
+- Code changes should be reviewed before merging.
 feature/project-foundation
 ```
 
